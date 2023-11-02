@@ -1,0 +1,11 @@
+# API specification
+api:
+  name: "${project.artifactId}"
+  version: "${project.version}"
+  runtime: "${project.properties.app.runtime}"
+  dependencies: "${project.dependencies}"
+ 
+gon:
+  name: "Gonzalo"
+  
+  

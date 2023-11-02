@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4d186f2c-94c0-45f6-a992-63854eed5334" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="844ab9e7-8121-44e1-847d-e8a4e93e60e9" file="properties/properties.yaml" />
+	<flow name="test-maven-propertiesFlow" doc:id="74c94ec2-6752-4085-8aac-301b53919796" >
+		<http:listener doc:name="Listener" doc:id="65509fa0-94ae-4807-8f7b-fcb4447c5afd" config-ref="HTTP_Listener_config" path="/maven"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;	apiName: p("api.name") default "",&#10;	apiVersion: p("api.version") default "",&#10;	runtime: p("api.runtime") default "",&#10;	dependencies: p("api.dependencies") default "", &#10;	gonName: p("gon.name")&#10;}]' doc:name="Set Payload" doc:id="e7e4e680-b30a-413f-ab3e-19b8dac0f286" />
+		<logger level="INFO" doc:name="Logger" doc:id="3435e2f5-de41-4a25-9d8f-19c00c57b8c9" message="#[payload]"/>
+	</flow>
+</mule>
